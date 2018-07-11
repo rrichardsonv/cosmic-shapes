@@ -1,15 +1,15 @@
 {
-    "name": "helloworld",
-    "displayName": "HelloCordova",
+    "name": "cosmic-shapes",
+    "displayName": "Cosmic Shapes",
     "version": "1.0.0",
-    "description": "A sample Apache Cordova application that responds to the deviceready event.",
+    "description": "A simple visualization app for ipad",
     "main": "index.js",
     "scripts": {
         "ios-dev": "cordova run ios --target=\"iPad--5th-generation-, 11.2\"",
         "browser-dev": "cordova run browser",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
-    "author": "Apache Cordova Team",
+    "author": "Robert Richardson",
     "license": "Apache-2.0",
     "dependencies": {
         "cordova-browser": "^5.0.3",
@@ -24,5 +24,11 @@
             "browser",
             "ios"
         ]
+    },
+    "prettier": {
+        "printWidth": 100,
+        "singleQuote": true,
+        "trailingComma": "es5"
     }
 }
+
