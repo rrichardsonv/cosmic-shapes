@@ -6,6 +6,7 @@
     "main": "index.js",
     "scripts": {
         "ios-dev": "cordova run ios --target=\"iPad--5th-generation-, 11.2\"",
+        "browser-dev": "cordova run browser",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "author": "Apache Cordova Team",
