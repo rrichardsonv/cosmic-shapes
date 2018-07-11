@@ -4,13 +4,13 @@ Simple canvas cordova application for geometric visualization
 
 # Setup
 
-_prepare js dependencies_
+##### Prepare js dependencies
 `$ npm i`
 
-_prepare cordova platforms and plugins_
+##### Prepare cordova platforms and plugins
 `$ cordova prepare`
 
-### To Start
+##### To Start
 
 <table>
 <tr>
