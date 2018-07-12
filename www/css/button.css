@@ -1,0 +1,20 @@
+.btn {
+  display: inline-block;
+  vertical-align: middle;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  word-wrap: normal;
+  box-sizing: border-box;
+  font-weight: 700;
+  position: relative;
+  text-align: center;
+  padding: 16px;
+  outline: none;
+  border: transparent
+}
+
+.btn + .btn {
+  margin-left: 16px;
+}

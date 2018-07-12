@@ -5,8 +5,8 @@
     "description": "A simple visualization app for ipad",
     "main": "index.js",
     "scripts": {
-        "ios-dev": "cordova run ios --target=\"iPad--5th-generation-, 11.2\"",
-        "browser-dev": "cordova run browser",
+        "ios-dev": "cordova serve ios --target=\"iPad--5th-generation-, 11.2\"",
+        "browser-dev": "cordova serve browser",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "author": "Robert Richardson",
@@ -31,4 +31,3 @@
         "trailingComma": "es5"
     }
 }
-
