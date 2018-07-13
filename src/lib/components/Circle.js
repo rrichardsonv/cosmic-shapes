@@ -1,7 +1,7 @@
 import { TAU } from './constants';
 
 class Circle {
-  constructor(x, y, radius, fillColor) {
+  constructor({ x, y, radius, fillColor }) {
     this.properties = {
       x,
       y,

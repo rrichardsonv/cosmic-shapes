@@ -2,5 +2,6 @@ npm-debug.log*
 .DS_Store
 /node_modules
 /platforms
-/www/js
+/www/js/*.js
 /plugins
+.cache
