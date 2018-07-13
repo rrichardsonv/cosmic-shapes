@@ -3,5 +3,6 @@ npm-debug.log*
 /node_modules
 /platforms
 /www/js/*.js
+/www/js/*.map
 /plugins
 .cache
