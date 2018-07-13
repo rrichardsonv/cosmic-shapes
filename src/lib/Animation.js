@@ -1,5 +1,5 @@
 import Goo from './components/Goo';
-import { prepareEcosystem } from './components/utilities';
+import { prepareEcosystem } from './utilities/geometryHelpers';
 
 const getDefaultGooProps = fillColor => ({
   qty: 25,

@@ -1,17 +1,8 @@
-import { TAU } from './constants';
-
-const DEFAULT_COLOR = '#85cc66';
+import { TAU, DEFAULT_FILL_COLOR } from '../utilities/constants';
 
 class Goo {
   constructor({ x, y, dx, width, length, center, size, fillColor }) {
-    this.properties = {
-      x,
-      y,
-      dx,
-      width,
-      length,
-      fillColor: fillColor || DEFAULT_COLOR,
-    };
+    this.properties = { x, y, dx, width, length, fillColor: fillColor || DEFAULT_FILL_COLOR };
     this.center = center;
     this.earthRadius = size;
     this.earthDiameter = size * 2;

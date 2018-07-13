@@ -1,11 +1,11 @@
-export const triangulate = (dx, dy) => Math.sqrt(dx * dx + dy + dy);
+const triangulate = (dx, dy) => Math.sqrt(dx * dx + dy + dy);
 
-export const getDistance = (a, b) => {
+const getDistance = (a, b) => {
   const [dx, dy] = [a.x - b[0], a.y - b[1]];
   return triangulate(dx, dy);
 };
 
-export const findClosest = (points, b) => {
+const findClosest = (points, b) => {
   let distance = null;
   let closestPoint;
   let iteration = -1;
@@ -24,11 +24,11 @@ export const findClosest = (points, b) => {
   return closestPoint;
 };
 
-export const rollCandidate = (point, offset) => {
+const rollCandidate = (point, offset) => {
   return Math.floor(Math.random() * (point + offset - (point - offset) + 1)) + (point - offset);
 };
 
-export const earthMask = (samples, size, center) => {
+const earthMask = (samples, size, center) => {
   let iteration = -1;
   let bestCandidate,
     bestDistance = 0;
