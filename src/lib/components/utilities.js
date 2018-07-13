@@ -45,21 +45,28 @@ export const earthMask = (samples, size, center) => {
   return bestCandidate;
 };
 
-// function earthMask(samples) {
-//   var bestCandidate,
-//     bestDistance = 0;
-//   //The higher the iteration the better the distribution
-//   //Performance takes a hit with higher iteration
-//   for (var i = 0; i < 20; ++i) {
-//     var c = [
-//         Math.floor(Math.random() * (center.x + 240 - (center.x - 240) + 1)) + (center.x - 240),
-//         Math.floor(Math.random() * (center.y + 120 - (center.y - 120) + 1)) + (center.y - 120),
-//       ],
-//       d = distance(findClosest(samples, c), c);
-//     if (d > bestDistance) {
-//       bestDistance = d;
-//       bestCandidate = c;
-//     }
-//   }
-//   return bestCandidate;
-// }
+function random(min, max) {
+  return Math.floor(Math.random() * max) + min;
+}
+
+export function prepareEcosystem(Component, props, size, center) {
+  const { qty, sample, maxW, minW, maxL, minL, minSpeed, maxSpeed } = props;
+  let iterations = -1;
+  let result = [];
+
+  while (++iterations <= qty) {
+    const bestCoords = earthMask(sample, size, center);
+    result.push(
+      new Component({
+        x: bestCoords[0],
+        y: bestCoords[1],
+        dx: random(minSpeed, maxSpeed),
+        width: random(minW, maxW),
+        length: random(minL, maxL),
+        center,
+        size,
+      })
+    );
+  }
+  return result;
+}

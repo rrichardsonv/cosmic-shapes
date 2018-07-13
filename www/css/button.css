@@ -18,3 +18,11 @@
 .btn + .btn {
   margin-left: 16px;
 }
+
+.btn > .color-select {
+  height: 3em;
+}
+
+#triangle.btn {
+  font-size: 25px;
+}

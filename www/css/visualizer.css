@@ -1,6 +1,8 @@
 .visualizer {
-  height: 100%;
-  width: 100%;
+  /* height: 100%;
+  width: 100%; */
+  /* position: absolute;
+  z-index: 2000; */
 }
 
 .visualizer__container {
@@ -8,6 +10,7 @@
   height: calc(100% - 32px);
   width: calc(100% - 32px);
   padding: 16px;
+  background-color: black;
   background-image: url("../img/space-bg.svg");
   background-size: cover;
   background-position: -72px 0;

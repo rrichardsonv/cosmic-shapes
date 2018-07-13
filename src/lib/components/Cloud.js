@@ -8,24 +8,23 @@ class Cloud {
     this.earthDiameter = size * 2;
   }
 
-  draw = canvas => {
+  draw = ctx => {
     const { x, y, length, width } = this.properties;
-    console.log(`drawing land at x:${x} y: ${y}`);
-    canvas.save();
-    canvas.beginPath();
-    canvas.arc(this.center.x, this.center.y, this.earthRadius, 0, TAU, false);
-    canvas.clip();
-    canvas.beginPath();
-    canvas.moveTo(x, y);
-    canvas.lineCap = 'round';
-    canvas.lineWidth = width;
-    canvas.lineTo(x + length, this.y);
-    canvas.strokeStyle = 'white';
-    canvas.stroke();
-    canvas.restore();
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(this.center.x, this.center.y, this.earthRadius, 0, TAU, false);
+    ctx.clip();
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+    ctx.lineCap = 'round';
+    ctx.lineWidth = width;
+    ctx.lineTo(x + length, this.y);
+    ctx.strokeStyle = '#FFFFFF';
+    ctx.stroke();
+    ctx.restore();
   };
 
-  update = canvas => {
+  update = ctx => {
     const { x, dx } = this.properties;
     let newX = x;
 
@@ -34,8 +33,8 @@ class Cloud {
     }
 
     newX = newX - dx;
-    this.x = newX;
-    this.draw(canvas);
+    this.properties.x = newX;
+    this.draw(ctx);
   };
 }
 
