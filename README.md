@@ -1,14 +1,20 @@
 # cosmic-shapes
-Simple canvas cordova application for geometric visualization
 
+Simple canvas cordova application for geometric visualization
 
 # Setup
 
 ##### Prepare js dependencies
+
 `$ npm i`
 
 ##### Prepare cordova platforms and plugins
+
 `$ cordova prepare`
+
+##### Build the bundle
+
+`$ npm run build`
 
 ##### To Start
 
@@ -22,7 +28,7 @@ Simple canvas cordova application for geometric visualization
 </td>
 </tr>
 <tr>
-<td>iOS</td>
+<td>iOS simulator with iPad</td>
 <td>
 
 `$ npm run ios-dev`
