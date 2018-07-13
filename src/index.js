@@ -8,15 +8,17 @@ const streamHandler = new StreamHandler();
 
 app.on('deviceready', function() {
   animation.setCanvasContext();
+  streamHandler.setCaptureStream();
 });
 
 app.on('devicepause', function() {
   animation.cancel();
+  streamHandler.stopRecord();
 });
 
 app.on('deviceplay', function(newColor) {
   animation.run(newColor);
-  streamHandler.setCaptureStream();
+  streamHandler.startRecord();
 });
 
 app.run();
