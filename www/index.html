@@ -41,8 +41,11 @@
     <div class="app">
         <div class="visualizer__container">
             <canvas height="480px" width="480px" id="c"></canvas>
-            <div id="controls" class="visualizer__controls">
-                <button class="btn" id="pause-btn">&#9616;&#9616;</button>
+            <div id="controls" class="visualizer__controls fade-in">
+                <button class="btn" id="refresh-btn">Pause/Play</button>
+                <div class="color-prompt">
+                    <input type='tel' id="color-input" placeholder="Color" value="red" />
+                </div>
             </div>
         </div>
     </div>

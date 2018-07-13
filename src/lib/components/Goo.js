@@ -1,17 +1,24 @@
 import { TAU } from './constants';
 
-const LAND_COLOR = '#85cc66';
+const DEFAULT_COLOR = '#85cc66';
 
-class Land {
-  constructor({ x, y, dx, width, length, center, size }) {
-    this.properties = { x, y, dx, width, length };
+class Goo {
+  constructor({ x, y, dx, width, length, center, size, fillColor }) {
+    this.properties = {
+      x,
+      y,
+      dx,
+      width,
+      length,
+      fillColor: fillColor || DEFAULT_COLOR,
+    };
     this.center = center;
     this.earthRadius = size;
     this.earthDiameter = size * 2;
   }
 
   draw = ctx => {
-    const { x, y, length, width } = this.properties;
+    const { x, y, length, width, fillColor } = this.properties;
     ctx.save();
     ctx.beginPath();
     ctx.arc(this.center.x, this.center.y, this.earthRadius, 0, TAU, false);
@@ -21,7 +28,7 @@ class Land {
     ctx.lineCap = 'round';
     ctx.lineWidth = width;
     ctx.lineTo(x + length, y);
-    ctx.strokeStyle = LAND_COLOR;
+    ctx.strokeStyle = fillColor;
     ctx.stroke();
     ctx.restore();
   };
@@ -40,4 +47,4 @@ class Land {
   };
 }
 
-export default Land;
+export default Goo;

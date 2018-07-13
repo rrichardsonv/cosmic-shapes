@@ -50,7 +50,7 @@ function random(min, max) {
 }
 
 export function prepareEcosystem(Component, props, size, center) {
-  const { qty, sample, maxW, minW, maxL, minL, minSpeed, maxSpeed } = props;
+  const { qty, sample, maxW, minW, maxL, minL, minSpeed, maxSpeed, fillColor } = props;
   let iterations = -1;
   let result = [];
 
@@ -65,6 +65,7 @@ export function prepareEcosystem(Component, props, size, center) {
         length: random(minL, maxL),
         center,
         size,
+        fillColor,
       })
     );
   }

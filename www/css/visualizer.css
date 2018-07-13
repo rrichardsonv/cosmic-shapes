@@ -10,7 +10,6 @@
   height: calc(100% - 32px);
   width: calc(100% - 32px);
   padding: 16px;
-  background-color: black;
   background-image: url("../img/space-bg.svg");
   background-size: cover;
   background-position: -72px 0;
@@ -29,9 +28,14 @@
 }
 
 .visualizer__controls > .btn {
-  background: var(--color-green-m);
-  box-shadow: 1px 1px 0px 2px var(--color-green-d);
+  background: var(--color-cream);
+  box-shadow: 1px 1px 0px 2px var(--color-gray-d);
   color: black;
   padding: 1rem 1.5rem 1rem 1rem;
   border-radius: 14px;
+}
+
+.visualizer__controls > .playing {
+  background: var(--color-gray-m);
+  box-shadow: inset 1px 1px 0px 2px var(--color-gray-d);
 }

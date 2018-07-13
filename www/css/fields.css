@@ -12,17 +12,32 @@
   text-align: center;
   padding: 16px;
   outline: none;
-  border: transparent
+  border: transparent;
+  flex: 0.5 0 0%;
+  margin-right: 3em;
+  font-size: 38px;
 }
 
 .btn + .btn {
   margin-left: 16px;
 }
 
-.btn > .color-select {
-  height: 3em;
-}
-
 #triangle.btn {
   font-size: 25px;
 }
+
+.color-prompt {
+  border: 1px solid #f0f0f0;
+  flex: 1;
+  display: flex;
+}
+
+.color-prompt > input {
+  margin: 10px auto;
+  padding: 16px 8px;
+  display: block;
+  outline: none;
+  border: none;
+  font-size: 32px;
+}
+
