@@ -1,13 +1,21 @@
 import { EventEmitter } from 'events';
-import EventListeners from './EventListeners';
+import DOMListeners from './DOMListeners';
 
-const listeners = new EventListeners();
-class DeviceManager extends EventEmitter {
+const listeners = new DOMListeners();
+
+const debugLog = (...args) => {
+  if (process.env.DEBUG === 'true') {
+    console && console.log(...args);
+  }
+};
+
+class AppManager extends EventEmitter {
   onDeviceReady = e => {
     listeners.setDOMcontext();
     listeners.setRefreshBtnListener(this.onDevicePlay);
     listeners.setCanvasListener(this.onHideControls);
-    this.emit('deviceready', e);
+    this.emit('deviceready');
+    debugLog('deviceready');
   };
 
   onDevicePause = e => {
@@ -16,10 +24,11 @@ class DeviceManager extends EventEmitter {
 
     listeners.removeRefreshBtnListener(this.onDevicePause);
     listeners.setRefreshBtnListener(this.onDevicePlay);
-    const refreshBtn = document.getElementById('refresh-btn');
-    refreshBtn.classList.remove('playing');
 
-    this.emit('devicepause', e);
+    this.emit('devicepause');
+    debugLog('devicepause');
+
+    this.onAnimationEnd(e);
   };
 
   onDevicePlay = e => {
@@ -28,35 +37,63 @@ class DeviceManager extends EventEmitter {
 
     listeners.removeRefreshBtnListener(this.onDevicePlay);
     listeners.setRefreshBtnListener(this.onDevicePause);
-    const refreshBtn = document.getElementById('refresh-btn');
-    refreshBtn.classList.add('playing');
 
+    this.emit('deviceplay');
+    debugLog('deviceplay');
+
+    this.onAnimationStart(e);
+  };
+
+  onAnimationStart = e => {
     const newColor = listeners.getColor();
-    newColor ? this.emit('deviceplay', newColor) : this.emit('deviceplay');
+    newColor ? this.emit('animationstart', newColor) : this.emit('animationstart');
+    debugLog('animationstart');
+
+    this.onRecordingStart();
+  };
+
+  onAnimationEnd = e => {
+    this.emit('animationend');
+    debugLog('animationend');
+
+    this.onRecordingEnd();
+  };
+
+  onRecordingStart = e => {
+    this.emit('recordingstart');
+    debugLog('recordingstart');
+  };
+
+  onRecordingEnd = e => {
+    this.emit('recordingend');
+    debugLog('recordingend');
+  };
+
+  onUploadStart = e => {
+    this.emit('uploadstart');
+    debugLog('uploadstart');
   };
 
   onHideControls = e => {
     e.preventDefault();
     e.stopPropagation();
-    const controls = document.getElementById('controls');
-    controls.classList.add('fade-out');
-    controls.classList.remove('fade-in');
+
     listeners.removeCanvasListener(this.onHideControls);
     listeners.setCanvasListener(this.onShowControls);
 
     this.emit('hidecontrols');
+    debugLog('hidecontrols');
   };
 
   onShowControls = e => {
     e.preventDefault();
     e.stopPropagation();
-    const controls = document.getElementById('controls');
-    controls.classList.remove('fade-out');
-    controls.classList.add('fade-in');
+
     listeners.removeCanvasListener(this.onShowControls);
     listeners.setCanvasListener(this.onHideControls);
 
     this.emit('showcontrols');
+    debugLog('showcontrols');
   };
 
   run = () => {
@@ -64,4 +101,4 @@ class DeviceManager extends EventEmitter {
   };
 }
 
-export default DeviceManager;
+export default AppManager;

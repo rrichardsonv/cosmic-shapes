@@ -1,4 +1,4 @@
-class EventListeners {
+class DOMListeners {
   constructor() {
     this.refreshBtn = null;
     this.colorInput = null;
@@ -36,4 +36,4 @@ class EventListeners {
   };
 }
 
-export default EventListeners;
+export default DOMListeners;

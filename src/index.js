@@ -1,24 +1,56 @@
-import DeviceManager from './lib/DeviceManager';
+import AppManager from './lib/AppManager';
 import Animation from './lib/Animation';
-import StreamHandler from './lib/StreamHandler';
+import CanvasRecorder from './lib/CanvasRecorder';
+import RecordingUploader from './lib/RecordingUploader';
 
-const app = new DeviceManager();
+const GATEWAY_URL = 'http://localhost:6001/uploads';
+
+const app = new AppManager();
 const animation = new Animation();
-const streamHandler = new StreamHandler();
+const canvasRecorder = new CanvasRecorder();
+const uploader = new RecordingUploader(GATEWAY_URL);
 
 app.on('deviceready', function() {
   animation.setCanvasContext();
-  streamHandler.setCaptureStream();
+  canvasRecorder.setCaptureStream();
 });
 
 app.on('devicepause', function() {
-  animation.cancel();
-  streamHandler.stopRecord();
+  const refreshBtn = document.getElementById('refresh-btn');
+  refreshBtn.classList.remove('playing');
 });
 
-app.on('deviceplay', function(newColor) {
+app.on('deviceplay', function() {
+  const refreshBtn = document.getElementById('refresh-btn');
+  refreshBtn.classList.add('playing');
+});
+
+app.on('animationstart', function(newColor) {
   animation.run(newColor);
-  streamHandler.startRecord();
+});
+
+app.on('animationend', function() {
+  animation.cancel();
+});
+
+app.on('recordingstart', function() {
+  canvasRecorder.startRecord();
+});
+
+app.on('recordingend', function() {
+  canvasRecorder.stopRecord(uploader.upload);
+});
+
+app.on('hidecontrols', function() {
+  const controls = document.getElementById('controls');
+  controls.classList.add('fade-out');
+  controls.classList.remove('fade-in');
+});
+
+app.on('showcontrols', function() {
+  const controls = document.getElementById('controls');
+  controls.classList.remove('fade-out');
+  controls.classList.add('fade-in');
 });
 
 app.run();
