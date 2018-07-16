@@ -16,6 +16,8 @@ Simple canvas cordova application for geometric visualization
 
 `$ npm run build`
 
+you may need to `chmod +x` on `build.sh`;
+
 ##### To Start
 
 <table>
@@ -36,3 +38,15 @@ Simple canvas cordova application for geometric visualization
 </td>
 </tr>
 </table>
+
+### Notes
+
+Clicking on the moon as it is being drawn will hide the controls.
+
+Was not able to get canvas video capture working on ios. Realized too late that my only option was stitching frames together server side with something like ffmpeg given ReplayKit currently does not work on the iPad sim. The basic flow is as follows:
+
+1.  Establish websocket connection
+2.  Bind event listeners
+3.  On canvas paint begin recording
+4.  On stop queue the MediaStream and an image of final state
+5.  Run through the queue parsing and kicking down the socket
