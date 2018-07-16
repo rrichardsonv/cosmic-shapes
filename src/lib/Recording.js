@@ -6,36 +6,48 @@ const hashSimpleId = (...strings) => {
 };
 
 class Recording {
-  constructor({ startMs, endMs, onRecordingReady }) {
+  constructor({ startMs, endMs, onRecordingReady, thumbnailBlob }) {
     this.start = startMs;
     this.end = endMs;
     this.duration = endMs - startMs;
     this.id = hashSimpleId(startMs, endMs);
     this.blob = null;
     this.blobSize = null;
+    this.thumbnailBlob = thumbnailBlob;
     this.srcUrl = null;
     this.onReady = onRecordingReady;
   }
 
-  static CODEC = 'video/webm;codecs=h264';
+  static VIDEO_CODEC = 'video/webm;codecs=h264';
+  static IMAGE_CODEC = 'image/png';
 
   setBlob = blob => {
     this.blob = blob;
     this.blobSize = blob.size;
     this.srcUrl = window.URL.createObjectURL(blob);
-    this.onReady(blob, this.metaData());
+    this.ready();
+  };
+
+  ready = () => {
+    this.onReady({
+      video: this.blob,
+      metaData: this.metaData(),
+      thumbnail: this.thumbnailBlob,
+    });
   };
 
   metaData = () => ({
     size: this.blobSize,
     name: this.id,
+    duration: this.duration,
+    start: this.startMs,
   });
 
   createInputElement = () => {
     const element = document.createElement('input');
     element.setAttribute('id', this.id);
     element.setAttribute('type', 'file');
-    element.setAttribute('accept', Recording.CODEC);
+    element.setAttribute('accept', Recording.VIDEO_CODEC);
     element.setAttribute('src', this.srcUrl);
     element.setAttribute('hidden', 'true');
     return element;

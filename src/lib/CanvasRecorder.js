@@ -3,23 +3,30 @@ import Recording from './Recording';
 const getDateTime = () => {
   return new Date().getTime();
 };
-
 class CanvasRecorder {
   constructor() {
     this.mediaRecorder = null;
     this.startTime = null;
     this.recording = null;
     this.chunks = [];
+    this.canvas = null;
+    this.thumbnail = null;
   }
 
   setCaptureStream = () => {
-    const canvas = document.getElementById('c');
-    const stream = canvas.captureStream();
-    this.mediaRecorder = this.getMediaRecorder(stream);
+    this.canvas = document.getElementById('c');
+    if (
+      MediaRecorder &&
+      this.canvas.captureStream &&
+      typeof this.canvas.captureStream === 'function'
+    ) {
+      const stream = this.canvas.captureStream();
+      this.mediaRecorder = this.getMediaRecorder(stream);
+    }
   };
 
   getMediaRecorder = stream => {
-    const mediaRecorder = new MediaRecorder(stream, { mimeType: Recording.CODEC });
+    const mediaRecorder = new MediaRecorder(stream, { mimeType: Recording.VIDEO_CODEC });
     mediaRecorder.onstop = this.onStop;
     mediaRecorder.ondataavailable = this.onDataAvailable;
 
@@ -27,8 +34,8 @@ class CanvasRecorder {
   };
 
   onStop = () => {
-    console.log('data available after MediaRecorder.stop() called.');
-    this.recording.setBlob(new Blob(this.chunks, { type: Recording.CODEC }));
+    console.log('data available');
+    this.recording.setBlob(new Blob(this.chunks, { type: Recording.VIDEO_CODEC }));
     // const inputElement = this.recording.createInputElement();
     // document.getElementById('controls').appendChild(inputElement);
     console.log('recorder stopped');
@@ -41,7 +48,9 @@ class CanvasRecorder {
 
   startRecord = () => {
     this.startTime = getDateTime();
-    this.mediaRecorder.start();
+    if (this.mediaRecorder !== null) {
+      this.mediaRecorder.start();
+    }
   };
 
   stopRecord = onRecordingReady => {
@@ -51,7 +60,18 @@ class CanvasRecorder {
       endMs: this.recordingEnd,
       onRecordingReady,
     });
-    this.mediaRecorder.stop();
+
+    this.mediaRecorder && this.mediaRecorder.pause();
+
+    this.canvas.toBlob(blob => {
+      this.recording.thumbnailBlob = blob;
+
+      if (this.mediaRecorder !== null) {
+        this.mediaRecorder.stop();
+      } else {
+        this.recording.ready();
+      }
+    });
   };
 }
 

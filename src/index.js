@@ -3,17 +3,36 @@ import Animation from './lib/Animation';
 import CanvasRecorder from './lib/CanvasRecorder';
 import RecordingUploader from './lib/RecordingUploader';
 
-const GATEWAY_URL = `http://${process.env.LOCAL_URI}:6001`;
+const GATEWAY_URL = process.env.LOCAL_URI;
 
 const app = new AppManager();
 const animation = new Animation();
 const canvasRecorder = new CanvasRecorder();
-const uploader = new RecordingUploader(GATEWAY_URL);
+const uploader = new RecordingUploader();
+
+const sanityTest = () => {
+  if (process.env.DEBUG === 'true') {
+    const request = new XMLHttpRequest();
+    request.open('GET', `${GATEWAY_URL}/sanity`, true);
+    request.send(null);
+  }
+};
+
+const getFailedConnectionMsg = err => {
+  if (process.env.DEBUG === 'true') {
+    return `
+    ${err.message}
+    ${GATEWAY_URL}
+      ---
+    ${err.stack}
+    `;
+  } else {
+    return 'Connection failed. Retrying';
+  }
+};
 
 app.on('deviceready', function({ success, failure }) {
-  var request = new XMLHttpRequest();
-  request.open('GET', `${GATEWAY_URL}/server`, true);
-  request.send(null);
+  sanityTest();
   uploader.connectToServer(success, failure);
 });
 
@@ -21,9 +40,7 @@ app.on('connectionready', function() {
   // Hide the loader
   const loader = document.getElementById('loader');
   loader.classList.add('fade-out');
-  setTimeout(() => {
-    loader.classList.add('hidden');
-  }, 750);
+  loader.classList.add('hidden');
 
   // Setup the canvas and recorder
   animation.setCanvasContext();
@@ -37,12 +54,7 @@ app.on('connectionready', function() {
 
 app.on('connectionfailed', function(err) {
   const msg = document.getElementById('loader-msg');
-  msg.innerText = `
-  ${err.message || 'Connection failure'}
-  ${GATEWAY_URL}
-  ---
-  ${err.stack}
-  `;
+  msg.innerText = getFailedConnectionMsg(err);
 });
 
 app.on('devicepause', function() {
