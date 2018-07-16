@@ -29,7 +29,7 @@
             * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
                 * Enable inline JS: add 'unsafe-inline' to default-src
         -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; connect-src https://localhost:6001 http://localhost:6001 ws://localhost:6001; media-src *; img-src 'self' data: content:;">
+    <meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' 'unsafe-inline'; connect-src 'self' * ws://* wss://*; script-src 'self' 'unsafe-inline' 'unsafe-eval'">
     <meta name="format-detection" content="telephone=no">
     <meta name="msapplication-tap-highlight" content="no">
     <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
@@ -38,8 +38,14 @@
 </head>
 
 <body>
-    <div class="app">
-        <div class="visualizer__container">
+    <div class="root">
+        <div id="loader" class="loader__container">
+            <div id="loader-msg" class="loading__message debug-message">
+                Connecting...
+            </div>
+            <div class="loader spin"></div>
+        </div>
+        <div id="main-view" class="visualizer__container hidden">
             <canvas height="480px" width="480px" id="c"></canvas>
             <video height="480" width="480" autoPlay id="stream-target"></video>
             <div id="controls" class="visualizer__controls fade-in">

@@ -1,0 +1,42 @@
+.loader__container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  align-content: center;
+  background: rgba(255, 255, 255, 0.3);
+  position: relative;
+}
+
+.loading__message {
+  position: absolute;
+  background-color: #FFD700;
+  color: black;
+  font-size: 22px;
+  font-weight: 700;
+  top: 25%;
+  left: 25%;
+  right: 25%;
+  line-height: 2.5;
+  border-radius: 6px;
+  text-align: center;
+  text-overflow: ellipsis;
+  font-family: Arial, sans-serif;
+}
+
+.debug-message {
+  font-size: 16px !important;
+  line-height: 1 !important;
+  left: 0 !important;
+  right: 0 !important;
+}
+
+.loader {
+  background-image: url(../img/galaxy-loader.svg);
+  background-repeat: no-repeat;
+  background-size: contain;
+  height: 240px;
+  width: 240px;
+  margin: auto;
+  opacity: 1;
+}

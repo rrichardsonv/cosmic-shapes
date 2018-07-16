@@ -14,8 +14,19 @@ class AppManager extends EventEmitter {
     listeners.setDOMcontext();
     listeners.setRefreshBtnListener(this.onDevicePlay);
     listeners.setCanvasListener(this.onHideControls);
-    this.emit('deviceready');
+
+    this.emit('deviceready', { success: this.onConnectionReady, failure: this.onConnectionFailed });
     debugLog('deviceready');
+  };
+
+  onConnectionReady = e => {
+    this.emit('connectionready');
+    debugLog('connectionready');
+  };
+
+  onConnectionFailed = err => {
+    this.emit('connectionfailed', err);
+    debugLog('connectionfailed', err);
   };
 
   onDevicePause = e => {

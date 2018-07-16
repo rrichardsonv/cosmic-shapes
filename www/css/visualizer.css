@@ -10,9 +10,6 @@
   height: calc(100% - 32px);
   width: calc(100% - 32px);
   padding: 16px;
-  background-image: url("../img/space-bg.svg");
-  background-size: cover;
-  background-position: -72px 0;
 }
 
 .visualizer__controls {

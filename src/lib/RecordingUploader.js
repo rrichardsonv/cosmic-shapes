@@ -1,9 +1,22 @@
 import io from 'socket.io-client';
 
+const fakeError = str => ({
+  message: str,
+  stack: '',
+});
+
+const socketManager = io(`http://${process.env.LOCAL_URI}:6001/uploads`, {
+  autoConnect: false,
+  reconnectionDelay: 1000,
+  reconnection: true,
+  reconnectionAttempts: 10,
+  rejectUnauthorized: false,
+});
+
 class RecordingUploader {
-  constructor(url) {
+  constructor() {
     this.fileReader = this.getFileReader();
-    this.socket = this.getWebSocket(url);
+    this.socket = null;
     this.currentUpload = null;
     this.queue = [];
   }
@@ -15,9 +28,15 @@ class RecordingUploader {
     return fileReader;
   };
 
-  getWebSocket = url => {
-    const socket = io.connect(url);
-    return socket;
+  connectToServer = (successFn, failFn) => {
+    this.socket = socketManager.open();
+    this.socket.on('connect_error', failFn);
+    this.socket.on('connect_timeout', () => failFn(fakeError('timeout')));
+    this.socket.on('reconnecting', attempt =>
+      failFn(fakeError(`Reconnecting attempt: ${attempt}`))
+    );
+    this.socket.on('reconnect', successFn);
+    this.socket.on('connect', successFn);
   };
 
   onLoad = e => {
